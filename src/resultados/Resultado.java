@@ -17,11 +17,11 @@ import modelo.Nodo;
 public class Resultado<E> {
     
     private long duracion;
-    private List<Nodo<E>> listaNodos;
+    private List<Nodo<E>> ruta;
     
     public Resultado(long duracion){
         this.duracion = 0;
-        this.listaNodos = new LinkedList<>();
+        this.ruta = new LinkedList<>();
     }
 
     public long getDuracion() {
@@ -32,11 +32,11 @@ public class Resultado<E> {
         this.duracion = duracion;
     }
 
-    public List<Nodo<E>> getListaNodos() {
-        return listaNodos;
+    public List<Nodo<E>> getRuta() {
+        return ruta;
     }
 
-    public void setListaNodos(List<Nodo<E>> listaNodos) {
-        this.listaNodos = listaNodos;
+    public void setRuta(List<Nodo<E>> ruta) {
+        this.ruta = ruta;
     }
 }

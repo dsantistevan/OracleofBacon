@@ -96,6 +96,5 @@ public class VentanaInsertar {
     public String getTfActor2() {
         return tfActor2.getText();
     }
-    
-    
+     
 }

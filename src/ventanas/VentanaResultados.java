@@ -28,6 +28,9 @@ public class VentanaResultados {
     private BorderPane bpResultado;
     private VBox vbResultados = new VBox();
     private final Label lbtitulo = new Label("Resultados de Busqueda");
+    private final Button btDfs = new Button("   Resultado DFS   ");
+    private final Button btBfs = new Button("   Resultado BFS   ");
+    private final Button btDijkstra = new Button("   Resultado Dijkstra   ");
     private final Button btReintentar = new Button("   Reintentar   ");
     private final Button btSalir = new  Button("    Salir    ");
     
@@ -38,6 +41,14 @@ public class VentanaResultados {
     public void crearVentana(){
         btReintentar.setStyle("-fx-background-color: #FD9900; -fx-font-weight: bold;");
         btSalir.setStyle("-fx-background-color: #FD9900; -fx-font-weight: bold;");
+        btDfs.setStyle("-fx-background-color: #87CEEB; -fx-font-weight: bold;");
+        btBfs.setStyle("-fx-background-color: #87CEEB; -fx-font-weight: bold;");
+        btDijkstra.setStyle("-fx-background-color: #B7CEEB; -fx-font-weight: bold;");
+        
+        HBox verResultados = new HBox();
+        verResultados.getChildren().addAll(btDfs, btBfs, btDijkstra);
+        verResultados.setAlignment(Pos.CENTER);
+        verResultados.setSpacing(15);
         
         HBox hbox = new HBox();
         hbox.getChildren().addAll(btReintentar, btSalir);
@@ -53,7 +64,7 @@ public class VentanaResultados {
         hbTitulo.getChildren().addAll(lbtitulo);
         hbTitulo.setAlignment(Pos.CENTER);
         
-        vbResultados.getChildren().addAll(hbTitulo, hbox);  //TAMBIEN HAY QUE AGREGAR AHI EL CONCEPTO DEL PROGRAMA
+        vbResultados.getChildren().addAll(hbTitulo, verResultados, hbox);  //TAMBIEN HAY QUE AGREGAR AHI EL CONCEPTO DEL PROGRAMA
         vbResultados.setBackground(new Background(bI));
         vbResultados.setPadding(new Insets(10));
         vbResultados.setSpacing(30);

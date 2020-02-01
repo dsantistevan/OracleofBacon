@@ -26,6 +26,8 @@ public class GrafoLA<E,T> {
     private List<Vertex<E,T>> vertexes;
     private boolean directed;
     private Vertex<E,T> origenDijsktra;
+    private Vertex<E,T> origenBFS;
+    private Vertex<E,T> origenDFS;
     
     public GrafoLA() {
         directed=false;
@@ -191,6 +193,7 @@ public class GrafoLA<E,T> {
         List<E> list=new LinkedList<>();
         Vertex<E,T> v=searchVertex(origen);
         if(v==null) return list;    //Si el origen es nulo, el vertice es nulo
+        origenBFS = v;
         Queue<Vertex<E,T>> cola=new LinkedList<>();
         cola.offer(v);
         v.setVisited(true);
@@ -204,6 +207,7 @@ public class GrafoLA<E,T> {
                     ve.setVisited(true);
                     cola.offer(ve);
                     ve.setIntBFS(v.getIntBFS()+ed.getPeso());
+                    ve.setPrevioBFS(v);
                 }
             }
         }
@@ -217,6 +221,7 @@ public class GrafoLA<E,T> {
         List<E> list=new LinkedList<>();
         Vertex<E,T> v=searchVertex(origen);
         if(v==null) return list;    //Si el origen es nulo, el vertice es nulo
+        origenDFS = v; 
         Deque<Vertex<E,T>> pila=new LinkedList<>();
         pila.push(v);
         v.setVisited(true);
@@ -230,6 +235,7 @@ public class GrafoLA<E,T> {
                     ve.setVisited(true);
                     pila.push(ve);
                     ve.setIntDFS(v.getIntDFS()+ed.getPeso());
+                    ve.setPrevioDFS(v);
                 }
             }
         }
@@ -323,7 +329,47 @@ public class GrafoLA<E,T> {
         return connectedComponents().size()==1;
     }
     
+    public List<Nodo> rutaDFS(E destino){
+        Vertex<E,T> vd = searchVertex(destino);
+        if(vd == null)  return null;
+        LinkedList<Nodo> list = new LinkedList<>();
+        while(!vd.equals(origenDFS)){
+            Nodo<E> n = new Nodo<>(vd.getData());
+            list.addFirst(n);
+            Vertex<E,T> v = vd.getPrevioDFS();
+            for(Edge<E,T> e : v.getEdges()){
+                if(e.getDestino().equals(vd)){
+                    Nodo<T> n2 = new Nodo<>(e.getPelicula());
+                    list.addFirst(n2);
+                }
+            }
+            vd = vd.getPrevioDFS();
+        }
+        Nodo<E> ini = new Nodo<>(origenDFS.getData());
+        list.addFirst(ini);
+        return list;
+    }
     
+    public List<Nodo> rutaBFS(E destino){
+        Vertex<E,T> vd = searchVertex(destino);
+        if(vd == null)  return null;
+        LinkedList<Nodo> list = new LinkedList<>();
+        while(!vd.equals(origenBFS)){
+            Nodo<E> n = new Nodo<>(vd.getData());
+            list.addFirst(n);
+            Vertex<E,T> v = vd.getPrevioBFS();
+            for(Edge<E,T> e : v.getEdges()){
+                if(e.getDestino().equals(vd)){
+                    Nodo<T> n2 = new Nodo<>(e.getPelicula());
+                    list.addFirst(n2);
+                }
+            }
+            vd = vd.getPrevioBFS();
+        }
+        Nodo<E> ini = new Nodo<>(origenBFS.getData());
+        list.addFirst(ini);
+        return list;
+    }
     
     public List<Nodo> rutaDijkstra(E destino){
         Vertex<E,T> vd=searchVertex(destino);

@@ -22,7 +22,9 @@ public class Vertex<E,T> {
     private int intDijkstra;
     private Vertex<E,T> previoDijkstra;
     private int intBFS;
+    private Vertex<E,T> previoBFS;
     private int intDFS;
+    private Vertex<E,T> previoDFS;
             
     public Vertex(E data){
         this.data=data;
@@ -119,6 +121,22 @@ public class Vertex<E,T> {
 
     public void setIntDFS(int intDFS) {
         this.intDFS = intDFS;
+    }
+
+    public Vertex<E, T> getPrevioBFS() {
+        return previoBFS;
+    }
+
+    public void setPrevioBFS(Vertex<E, T> previoBFS) {
+        this.previoBFS = previoBFS;
+    }
+
+    public Vertex<E, T> getPrevioDFS() {
+        return previoDFS;
+    }
+
+    public void setPrevioDFS(Vertex<E, T> previoDFS) {
+        this.previoDFS = previoDFS;
     }
     
     

@@ -80,6 +80,10 @@ public class GrafoData {
         System.out.println("Termino con "+total+" milisegundos");
         System.out.println(g.menorDistanciaDijsktra(new Actor("Kevin Bacon"), new Actor("Hugh Grant")));
         System.out.println(g.rutaDijkstra(new Actor("Hugh Grant")));
+        System.out.println(g.menorDistanciaDFS(new Actor("Kevin Bacon"), new Actor("Hugh Grant")));
+        System.out.println(g.rutaDFS(new Actor("Hugh Grant")));
+        System.out.println(g.menorDistanciaBFS(new Actor("Kevin Bacon"), new Actor("Hugh Grant")));
+        System.out.println(g.rutaBFS(new Actor("Hugh Grant")));
     }
     
     public static GrafoLA<Actor,Pelicula> grafoArchivo(){

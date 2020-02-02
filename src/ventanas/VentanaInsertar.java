@@ -5,6 +5,7 @@
  */
 package ventanas;
 
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -26,61 +27,85 @@ import javafx.scene.text.Font;
  *
  * @author edwar
  */
-public class VentanaInsertar {
+public final class VentanaInsertar {
     private BorderPane root;
-    private VBox vbInsertar = new VBox();
+    private final VBox vbInsertar = new VBox();
     private final Button btEncontrar = new Button("   Encontrar   ");
     private final Button btSalir = new  Button("    Salir    ");
     private final Label lbActor1 = new Label("Actor 1:");
     private final Label lbActor2 = new Label("Actor 2:");
     private final Label titulo = new Label("Oracle of Bacon");
-    private TextField tfActor1 = new TextField("Kevin Bacon");
-    private TextField tfActor2 = new TextField(); 
+    private final TextField tfActor1 = new TextField("Kevin Bacon");
+    private final TextField tfActor2 = new TextField(); 
     
     public VentanaInsertar(){
         crearVentana();
     }
     
-    public void crearVentana(){
+    public final void crearVentana(){
+        aplicarEstilo();
+        vbInsertar.getChildren().addAll(tituloTop(), camposTexto(), estiloBotones(), imagenKevin());
+        root=new BorderPane();
+        root.setCenter(vbInsertar);
+    }
+    
+    private void aplicarEstilo(){
+        BackgroundImage bI = new BackgroundImage(new Image("imagenes/fondo.jpg", 960, 740, false, true),
+                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
+        
+        vbInsertar.setBackground(new Background(bI));
+        vbInsertar.setPadding(new Insets(10));
+        vbInsertar.setSpacing(30);
+    }
+    
+    private HBox estiloBotones(){
         btEncontrar.setStyle("-fx-background-color: #FD9900; -fx-font-weight: bold;");
         btSalir.setStyle("-fx-background-color: #FD9900; -fx-font-weight: bold;");
-        
+        HBox hbox = new HBox();
+        hbox.getChildren().addAll(btEncontrar, btSalir);
+        hbox.setAlignment(Pos.CENTER);
+        hbox.setSpacing(15);
+        return hbox;
+    }
+    
+    private HBox imagenKevin(){
         ImageView img = new ImageView("imagenes/Kevin_Bacon.jpg");
         img.setFitWidth(200);
         img.setFitHeight(198);
         HBox hbImagen = new HBox();
         hbImagen.getChildren().addAll(img);
         hbImagen.setAlignment(Pos.CENTER);
-        
-        HBox hbox = new HBox();
-        hbox.getChildren().addAll(btEncontrar, btSalir);
-        hbox.setAlignment(Pos.CENTER);
-        hbox.setSpacing(15);
-        
-        BackgroundImage bI = new BackgroundImage(new Image("imagenes/fondo.jpg", 960, 740, false, true),
-                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
-        
+        return hbImagen;
+    }
+    
+    private HBox camposTexto(){
         lbActor1.setStyle("-fx-font-weight: bold;");
         lbActor2.setStyle("-fx-font-weight: bold;");
         HBox labelsTextfields = new HBox();
         labelsTextfields.getChildren().addAll(lbActor1, tfActor1, lbActor2, tfActor2);
         labelsTextfields.setSpacing(20);
         labelsTextfields.setAlignment(Pos.CENTER);
-        
+        return labelsTextfields;
+    }
+    
+    private HBox tituloTop(){
         titulo.setStyle("-fx-font-weight: bold;");
         titulo.setFont(new Font(24));
         HBox hbTitulo = new HBox();
         hbTitulo.getChildren().addAll(titulo);
         hbTitulo.setAlignment(Pos.CENTER);
-        
-        vbInsertar.getChildren().addAll(hbTitulo, labelsTextfields, hbox, hbImagen);
-        vbInsertar.setBackground(new Background(bI));
-        vbInsertar.setPadding(new Insets(10));
-        vbInsertar.setSpacing(30);
-        root=new BorderPane();
-        root.setCenter(vbInsertar);
+        return hbTitulo;
     }
 
+    
+    private void activarBotones(){
+        btSalir.setOnAction(e -> Platform.exit());
+        btEncontrar.setOnAction(e -> {
+            long tiempoIni=System.currentTimeMillis();
+            
+        });
+    }
+    
     public BorderPane getRoot() {
         return root;
     }

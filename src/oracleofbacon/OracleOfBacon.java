@@ -24,7 +24,7 @@ public class OracleOfBacon extends Application{
         Scene sceneInicio = new Scene(ventanaInsertar.getRoot(), 800, 400);
         
         
-        ventanaInsertar.getBtSalir().setOnAction(e -> Platform.exit());
+        
         
         primaryStage.setTitle("ORACLE OF BACON");
         primaryStage.setScene(sceneInicio);

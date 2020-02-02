@@ -7,21 +7,22 @@ package resultados;
 
 import java.util.LinkedList;
 import java.util.List;
+import javafx.scene.control.ScrollPane;
 import modelo.Nodo;
 
 /**
  *
  * @author edwar
- * @param <E>
  */
-public class Resultado<E> {
+public class Resultado {
     
     private long duracion;
-    private List<Nodo<E>> ruta;
+    private List<Nodo> lista;
+    private ScrollPane root;
     
-    public Resultado(long duracion){
+    public Resultado(long duracion, List<Nodo> l){
         this.duracion = 0;
-        this.ruta = new LinkedList<>();
+        lista=l;
     }
 
     public long getDuracion() {
@@ -32,11 +33,5 @@ public class Resultado<E> {
         this.duracion = duracion;
     }
 
-    public List<Nodo<E>> getRuta() {
-        return ruta;
-    }
 
-    public void setRuta(List<Nodo<E>> ruta) {
-        this.ruta = ruta;
-    }
 }

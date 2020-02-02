@@ -5,7 +5,6 @@
  */
 package grafo;
 
-import modelo.Pelicula;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashSet;
@@ -167,7 +166,7 @@ public class GrafoLA<E,T> {
         while(it.hasNext()) {
             Vertex<E,T> v = it.next();
             v.setVisited(false);
-            v.setIntDFS(0);
+            v.setIntDFS(Integer.MAX_VALUE);
         }
     }
     
@@ -176,7 +175,7 @@ public class GrafoLA<E,T> {
         while(it.hasNext()) {
             Vertex<E,T> v = it.next();
             v.setVisited(false);
-            v.setIntBFS(0);
+            v.setIntBFS(Integer.MAX_VALUE);
         }
     }
     

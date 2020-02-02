@@ -31,6 +31,8 @@ public class Vertex<E,T> {
         edges=new LinkedList<>();
         intDijkstra=Integer.MAX_VALUE;
         previoDijkstra=null;
+        intDFS=Integer.MAX_VALUE;
+        intBFS=Integer.MAX_VALUE;
     }
 
     public E getData() {

@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -69,22 +70,7 @@ public class GrafoData {
         return list;
     }
     
-    public static void main(String[] args){
-        System.out.println("Inicio");
-        
-        long ini=System.nanoTime();
-        GrafoLA<Actor,Pelicula> g=grafoArchivo();
-        
-        long fin=System.nanoTime();
-        long total=(fin-ini)/1000000;
-        System.out.println("Termino con "+total+" milisegundos");
-        System.out.println(g.menorDistanciaDijsktra(new Actor("Kevin Bacon"), new Actor("Hugh Grant")));
-        System.out.println(g.rutaDijkstra(new Actor("Hugh Grant")));
-        System.out.println(g.menorDistanciaDFS(new Actor("Kevin Bacon"), new Actor("Hugh Grant")));
-        System.out.println(g.rutaDFS(new Actor("Hugh Grant")));
-        System.out.println(g.menorDistanciaBFS(new Actor("Kevin Bacon"), new Actor("Hugh Grant")));
-        System.out.println(g.rutaBFS(new Actor("Hugh Grant")));
-    }
+    
     
     public static GrafoLA<Actor,Pelicula> grafoArchivo(){
         List<Pelicula> lP=leerArchivos();

@@ -56,7 +56,7 @@ public final class VentanaInsertar {
         vbInsertar.getChildren().addAll(tituloTop(), camposTexto(), estiloBotones(), imagenKevin());
         root=new BorderPane();
         root.setCenter(vbInsertar);
-        mostrarResultado();
+        activarBotones();
     }
     
     private void cargarGrafo(){
@@ -116,16 +116,13 @@ public final class VentanaInsertar {
     
     private void activarBotones(){
         btSalir.setOnAction(e -> Platform.exit());
-        btEncontrar.setOnAction(e -> {
-            long tiempoIni=System.currentTimeMillis();
-            
-        });
+        mostrarResultado();
     }
     
     private void mostrarResultado(){
         btEncontrar.setOnAction((event) -> {
             
-            VentanaResultados vr = new VentanaResultados();
+            VentanaResultados vr = new VentanaResultados(this);
             root.setCenter(vr.getBpResultado());
             vr.getBtDijkstra().setOnAction((e) -> {
                 vr.getVbRuta().getChildren().clear();
@@ -145,36 +142,42 @@ public final class VentanaInsertar {
     public void mostrarDijkstra(VentanaResultados vr){
         Actor actor1 = new Actor(tfActor1.getText());
         Actor actor2 = new Actor(tfActor2.getText());
-        int dijsktra = grafo.menorDistanciaDijsktra(actor1,actor2);
         long ini=System.nanoTime();
+        int dijsktra = grafo.menorDistanciaDijsktra(actor1,actor2);
+        
         List<Nodo> list = grafo.rutaDijkstra(actor2);
         long fin=System.nanoTime();
-        long total=(fin-ini)/1000000;
+        long total=(fin-ini);
         Resultado res = new Resultado(total, list);
+        vr.getVbRuta().getChildren().clear();
         vr.getVbRuta().getChildren().add(res.getRoot());
     }
     
     public void mostrarBFS(VentanaResultados vr){
         Actor actor1 = new Actor(tfActor1.getText());
         Actor actor2 = new Actor(tfActor2.getText());
-        int bfs = grafo.menorDistanciaBFS(actor1,actor2);
         long ini=System.nanoTime();
+        int bfs = grafo.menorDistanciaBFS(actor1,actor2);
+        
         List<Nodo> list = grafo.rutaBFS(actor2);
         long fin=System.nanoTime();
-        long total=(fin-ini)/1000000;
+        long total=(fin-ini);
         Resultado res = new Resultado(total, list);
+        vr.getVbRuta().getChildren().clear();
         vr.getVbRuta().getChildren().add(res.getRoot());
     }
     
     public void mostrarDFS(VentanaResultados vr){
         Actor actor1 = new Actor(tfActor1.getText());
         Actor actor2 = new Actor(tfActor2.getText());
-        int dfs = grafo.menorDistanciaDFS(actor1,actor2);
         long ini=System.nanoTime();
+        int dfs = grafo.menorDistanciaDFS(actor1,actor2);
+        
         List<Nodo> list = grafo.rutaDFS(actor2);
         long fin=System.nanoTime();
-        long total=(fin-ini)/1000000;
+        long total=(fin-ini);
         Resultado res = new Resultado(total, list);
+        vr.getVbRuta().getChildren().clear();
         vr.getVbRuta().getChildren().add(res.getRoot());
     }
     
@@ -194,5 +197,10 @@ public final class VentanaInsertar {
     public String getTfActor2() {
         return tfActor2.getText();
     }
+
+    public VBox getVbInsertar() {
+        return vbInsertar;
+    }
      
+    
 }

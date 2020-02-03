@@ -37,8 +37,11 @@ public class VentanaResultados {
     private final Button btReintentar = new Button("   Reintentar   ");
     private final Button btSalir = new  Button("    Salir    ");
     
-    public VentanaResultados(){
+    public VentanaResultados(VentanaInsertar vi){
         crearVentana();
+        btReintentar.setOnAction((event) -> {
+           vi.getRoot().setCenter(vi.getVbInsertar());
+        });
     }
     
     public void crearVentana(){
@@ -78,10 +81,7 @@ public class VentanaResultados {
     
     public void acciones(){
         btSalir.setOnAction(e->Platform.exit());
-        btReintentar.setOnAction((event) -> {
-           VentanaInsertar vi = new VentanaInsertar();
-           bpResultado.setCenter(vi.getRoot());
-        });
+        
     }
 
     public Button getBtSalir() {

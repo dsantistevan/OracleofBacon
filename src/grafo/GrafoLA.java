@@ -317,9 +317,11 @@ public class GrafoLA<E,T> {
             HashSet<E> fin=new HashSet<>();
             ini.addAll(dfs(e));
             fin.addAll(reverse().dfs(e));
-            ini.removeAll(fin);
+            ini.retainAll(fin);
             total.removeAll(ini);
+            System.out.println(ini);
             list.add(ini);
+            System.out.println(total.size());
         }
         return list;
     }
@@ -330,7 +332,7 @@ public class GrafoLA<E,T> {
     
     public List<Nodo> rutaDFS(E destino){
         Vertex<E,T> vd = searchVertex(destino);
-        if(vd == null)  return null;
+        if(vd == null||vd.getIntDFS()==Integer.MAX_VALUE)  return null;
         LinkedList<Nodo> list = new LinkedList<>();
         while(!vd.equals(origenDFS)){
             Nodo<E> n = new Nodo<>(vd.getData());
@@ -351,7 +353,7 @@ public class GrafoLA<E,T> {
     
     public List<Nodo> rutaBFS(E destino){
         Vertex<E,T> vd = searchVertex(destino);
-        if(vd == null)  return null;
+        if(vd == null||vd.getIntBFS()==Integer.MAX_VALUE)  return null;
         LinkedList<Nodo> list = new LinkedList<>();
         while(!vd.equals(origenBFS)){
             Nodo<E> n = new Nodo<>(vd.getData());
@@ -372,7 +374,7 @@ public class GrafoLA<E,T> {
     
     public List<Nodo> rutaDijkstra(E destino){
         Vertex<E,T> vd=searchVertex(destino);
-        if(vd==null) return null;
+        if(vd==null||vd.getIntDijkstra()==Integer.MAX_VALUE) return null;
         LinkedList<Nodo> list=new LinkedList<>(); 
         while(!vd.equals(origenDijsktra)){
             Nodo<E> n=new Nodo<>(vd.getData());

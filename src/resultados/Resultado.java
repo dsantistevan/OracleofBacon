@@ -12,6 +12,7 @@ import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import modelo.Nodo;
@@ -32,7 +33,18 @@ public class Resultado {
     public Resultado(long duracion, List<Nodo> l){
         this.duracion = duracion;
         lista=l;
-        mostrarResultado();
+        if(l!=null)mostrarResultado();
+        else{
+            vbRuta.setAlignment(Pos.CENTER);
+            vbRuta.getChildren().add(new Label("No existe la ruta"));
+            
+        }
+        bp.setCenter(vbRuta);
+        
+        vbRuta.setBackground(Background.EMPTY);
+        root.setContent(bp);
+        root.setFitToWidth(true);
+        root.setBackground(Background.EMPTY);
     }
     
     public void mostrarResultado(){
@@ -41,7 +53,7 @@ public class Resultado {
         img.setFitHeight(19);
         
         Label lbBacon = new Label(lista.get(lista.size()-1).toString()+" tiene un numero Bacon de "+(lista.size()-1)/2);
-        Label lbDuracion = new Label("Duracion del algoritmo: " + duracion/1000 + " segundos");
+        Label lbDuracion = new Label("Duracion del algoritmo: " + duracion/1000 + " nanosegundos");
         lbBacon.setStyle("-fx-font-weight: bold;");
         lbDuracion.setStyle("-fx-font-weight: bold;");
         
@@ -51,8 +63,7 @@ public class Resultado {
         vbRuta.getChildren().addAll(lbBacon, lbDuracion);
         mostrarRuta();
         
-        bp.setCenter(vbRuta);
-        root.setContent(bp);
+        
     }
     
     public void mostrarRuta(){

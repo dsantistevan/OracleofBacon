@@ -5,6 +5,9 @@
  */
 package ventanas;
 
+import data.GrafoData;
+import grafo.GrafoLA;
+import java.util.List;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -22,6 +25,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import modelo.Actor;
+import modelo.Nodo;
+import modelo.Pelicula;
+import resultados.Resultado;
 
 /**
  *
@@ -37,16 +44,25 @@ public final class VentanaInsertar {
     private final Label titulo = new Label("Oracle of Bacon");
     private final TextField tfActor1 = new TextField("Kevin Bacon");
     private final TextField tfActor2 = new TextField(); 
+    GrafoLA<Actor, Pelicula> grafo;
     
     public VentanaInsertar(){
         crearVentana();
     }
     
     public final void crearVentana(){
+        cargarGrafo();
         aplicarEstilo();
         vbInsertar.getChildren().addAll(tituloTop(), camposTexto(), estiloBotones(), imagenKevin());
         root=new BorderPane();
         root.setCenter(vbInsertar);
+        mostrarResultado();
+    }
+    
+    private void cargarGrafo(){
+        GrafoLA<Actor, Pelicula> g = GrafoData.grafoArchivo();
+        grafo = g;
+        
     }
     
     private void aplicarEstilo(){
@@ -105,6 +121,63 @@ public final class VentanaInsertar {
             
         });
     }
+    
+    private void mostrarResultado(){
+        btEncontrar.setOnAction((event) -> {
+            
+            VentanaResultados vr = new VentanaResultados();
+            root.setCenter(vr.getBpResultado());
+            vr.getBtDijkstra().setOnAction((e) -> {
+                vr.getVbRuta().getChildren().clear();
+                mostrarDijkstra(vr);
+            });
+            vr.getBtBfs().setOnAction((e) -> {
+                vr.getVbRuta().getChildren().clear();
+                mostrarBFS(vr);
+            });
+            vr.getBtDfs().setOnAction((e) -> {
+                vr.getVbRuta().getChildren().clear();
+                mostrarDFS(vr);
+            });
+        });
+    }
+    
+    public void mostrarDijkstra(VentanaResultados vr){
+        Actor actor1 = new Actor(tfActor1.getText());
+        Actor actor2 = new Actor(tfActor2.getText());
+        int dijsktra = grafo.menorDistanciaDijsktra(actor1,actor2);
+        long ini=System.nanoTime();
+        List<Nodo> list = grafo.rutaDijkstra(actor2);
+        long fin=System.nanoTime();
+        long total=(fin-ini)/1000000;
+        Resultado res = new Resultado(total, list);
+        vr.getVbRuta().getChildren().add(res.getRoot());
+    }
+    
+    public void mostrarBFS(VentanaResultados vr){
+        Actor actor1 = new Actor(tfActor1.getText());
+        Actor actor2 = new Actor(tfActor2.getText());
+        int bfs = grafo.menorDistanciaBFS(actor1,actor2);
+        long ini=System.nanoTime();
+        List<Nodo> list = grafo.rutaBFS(actor2);
+        long fin=System.nanoTime();
+        long total=(fin-ini)/1000000;
+        Resultado res = new Resultado(total, list);
+        vr.getVbRuta().getChildren().add(res.getRoot());
+    }
+    
+    public void mostrarDFS(VentanaResultados vr){
+        Actor actor1 = new Actor(tfActor1.getText());
+        Actor actor2 = new Actor(tfActor2.getText());
+        int dfs = grafo.menorDistanciaDFS(actor1,actor2);
+        long ini=System.nanoTime();
+        List<Nodo> list = grafo.rutaDFS(actor2);
+        long fin=System.nanoTime();
+        long total=(fin-ini)/1000000;
+        Resultado res = new Resultado(total, list);
+        vr.getVbRuta().getChildren().add(res.getRoot());
+    }
+    
     
     public BorderPane getRoot() {
         return root;
